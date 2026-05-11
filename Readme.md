@@ -8,7 +8,7 @@ The system helps determine which maintenance tasks should be prioritized to maxi
 
 - Node.js
 - Express.js
-- Axios
+- Postman 
 
 ## Project Structure
 
