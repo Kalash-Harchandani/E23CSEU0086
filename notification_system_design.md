@@ -141,3 +141,12 @@ I would also use Redis caching for recent notifications, unread notifications an
 This reduces repeated database queries and improves response time significantly.
 
 Overall, horizontal scaling combined with load balancing and Redis caching provides better scalability and reliability for a notification system with very high traffic.
+
+# Stage 5
+## Answer
+
+If a very large number of notifications need to be sent, I would use asynchronous processing with queues like RabbitMQ or Kafka.
+
+Notifications would first enter the queue, and worker services would process them separately.
+
+I have not implemented these technologies yet personally, but I understand how they fit into scalable systems for handling traffic spikes, reducing server load and improving reliability.
