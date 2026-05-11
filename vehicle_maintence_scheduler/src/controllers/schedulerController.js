@@ -15,26 +15,24 @@ export const getDepots = async (
         const depots =
             await fetchDepots();
 
-        await Log(
-            "backend",
-            "info",
-            "controller",
-            "Depots API called successfully"
-        );
+        try {
+
+            await Log(
+                "backend",
+                "info",
+                "controller",
+                "Depots API called successfully"
+            );
+
+        } catch {}
 
         res.status(200).json(depots);
 
     } catch (error) {
 
-        await Log(
-            "backend",
-            "error",
-            "controller",
-            "Failed to fetch depots"
-        );
-
         console.log(
-            error.response?.data || error.message
+            error.response?.data ||
+            error.message
         );
 
         res.status(500).json({
@@ -57,26 +55,24 @@ export const getVehicles = async (
         const vehicles =
             await fetchVehicles();
 
-        await Log(
-            "backend",
-            "info",
-            "controller",
-            "Vehicles API called successfully"
-        );
+        try {
+
+            await Log(
+                "backend",
+                "info",
+                "controller",
+                "Vehicles API called successfully"
+            );
+
+        } catch {}
 
         res.status(200).json(vehicles);
 
     } catch (error) {
 
-        await Log(
-            "backend",
-            "error",
-            "controller",
-            "Failed to fetch vehicles"
-        );
-
         console.log(
-            error.response?.data || error.message
+            error.response?.data ||
+            error.message
         );
 
         res.status(500).json({
@@ -96,29 +92,73 @@ export const generateSchedule = async (
 
     try {
 
-        const { depotId } = req.params;
+        const { depotId } =
+            req.params;
 
-        await Log(
-            "backend",
-            "info",
-            "controller",
-            `Schedule API called for depot ${depotId}`
-        );
+        const depotsResponse =
+            await fetchDepots();
+
+        const vehiclesResponse =
+            await fetchVehicles();
+
+        const depots =
+            depotsResponse.depots;
+
+        const vehicles =
+            vehiclesResponse.vehicles;
+
+        const depot =
+            depots.find(
+                depot =>
+                    depot.ID ===
+                    Number(depotId)
+            );
+
+        if (!depot) {
+
+            return res
+                .status(404)
+                .json({
+                    success: false,
+                    message:
+                        "Depot not found"
+                });
+
+        }
+
+        try {
+
+            await Log(
+                "backend",
+                "info",
+                "controller",
+                `Schedule fetched for depot ${depotId}`
+            );
+
+        } catch {}
 
         res.status(200).json({
+
             success: true,
-            message:
-                "Schedule generation pending",
-            depotId
+
+            depotId:
+                Number(depotId),
+
+            mechanicHours:
+                depot.MechanicHours,
+
+            totalVehicles:
+                vehicles.length,
+
+            vehicles
+
         });
 
     } catch (error) {
 
-        await Log(
-            "backend",
-            "error",
-            "controller",
-            "Failed to generate schedule"
+        console.log(
+            error.response?.data ||
+            error.message
         );
 
         res.status(500).json({
