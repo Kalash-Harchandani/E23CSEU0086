@@ -72,3 +72,40 @@ Notification Schema
 }
 
 For real-time notification delivery, WebSockets can be used. When the user logs into the application, the frontend establishes a socket connection with the server. The server stores the active socket connection. Whenever a notification is created, the server first stores it in the database and then instantly pushes it to the connected client through the socket connection. This allows users to receive notifications without refreshing the page.MySQL can be used as the primary database because notification data is structured and relational. Redis can later be added for caching frequently accessed notifications and reducing database load.This design provides clean REST APIs, real-time notification delivery, scalable notification handling, and proper notification management.
+
+# Stage 2
+
+## Answer
+
+# Database Design
+
+I would use MySQL for the notification system because the data is structured and relational.
+The system mainly needs two entities:
+- users
+- notifications
+A user can have multiple notifications, so the notifications table will contain a userId field acting as a foreign key.
+
+Each notification would contain fields like:
+- id
+- userId
+- title
+- message
+- isRead
+- createdAt
+- link
+
+The isRead field helps in tracking unread notifications for users.
+
+To improve query performance, I would add indexes on:
+- userId
+- createdAt
+- isRead
+
+These indexes would help in quickly fetching notifications for a user, sorting latest notifications and filtering unread notifications efficiently
+For scalability, notifications should be fetched using pagination instead of loading everything at once.
+Example:
+GET /api/notifications?page=1&limit=10
+
+Later Redis can also be introduced for caching recent notifications and reducing load on MySQL.
+Old notifications can be archived or deleted periodically to keep the database lightweight and efficient.
+Overall, this design keeps the system simple, scalable and easy to maintain.
