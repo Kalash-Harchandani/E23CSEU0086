@@ -77,8 +77,6 @@ For real-time notification delivery, WebSockets can be used. When the user logs 
 
 ## Answer
 
-# Database Design
-
 I would use MySQL for the notification system because the data is structured and relational.
 The system mainly needs two entities:
 - users
@@ -109,3 +107,21 @@ GET /api/notifications?page=1&limit=10
 Later Redis can also be introduced for caching recent notifications and reducing load on MySQL.
 Old notifications can be archived or deleted periodically to keep the database lightweight and efficient.
 Overall, this design keeps the system simple, scalable and easy to maintain.
+
+
+# Stage 3
+## Answer
+
+If the notification table becomes very large, fetching notifications without optimization can become slow because the database may scan a huge amount of data. It can become expensive when millions of notifications exist.
+
+To optimize performance, I would first add indexing on:
+- userId
+- createdAt
+- isRead
+
+This helps the database quickly locate required notifications instead of scanning the entire table.Database partitioning can also be introduced based on creation date to improve performance for very large datasets.
+
+I would also avoid selecting unnecessary columns and only fetch fields required by the frontend.
+
+Overall, indexing, pagination, partitioning together can significantly improve performance for large-scale notification systems.
+
