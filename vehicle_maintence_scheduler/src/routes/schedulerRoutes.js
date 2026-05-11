@@ -1,4 +1,5 @@
 import express from "express";
+
 import {
     getDepots,
     getVehicles,
@@ -7,9 +8,15 @@ import {
 
 const router = express.Router();
 
-router.get("/depots", getDepots);
+router.get(
+    "/depots",
+    getDepots
+);
 
-router.get("/vehicles", getVehicles);
+router.get(
+    "/vehicles",
+    getVehicles
+);
 
 router.get(
     "/schedule/:depotId",

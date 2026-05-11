@@ -5,4 +5,4 @@ await Log(
     "info",
     "handler",
     "Logger middleware working successfully"
-);þ
+);

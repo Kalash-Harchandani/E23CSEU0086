@@ -22,7 +22,8 @@ const Log = async (
             },
             {
                 headers: {
-                    Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+                    Authorization:
+                        `Bearer ${process.env.ACCESS_TOKEN.trim()}`
                 }
             }
         );
@@ -34,10 +35,12 @@ const Log = async (
     } catch (error) {
 
         console.log(
+            "LOGGER ERROR:",
             error.response?.data || error.message
         );
 
     }
+
 };
 
 export default Log;
