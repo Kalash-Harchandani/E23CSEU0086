@@ -1,29 +1,15 @@
 # Stage 1
+
 ## Answer
 
-# Notification System Design
+The notification system should support fetching notifications, creating notifications, marking notifications as read, deleting notifications, and real-time notification delivery.
 
-The notification system should support:
+APIs:
 
-- fetching notifications
-- creating notifications
-- marking notifications as read
-- deleting notifications
-- real-time notification delivery
-
----
-
-# API Design
-
-## Fetch Notifications
-
-```http
 GET /api/notifications
-```
 
-### Response
+Response
 
-```json
 {
   "success": true,
   "notifications": [
@@ -38,73 +24,43 @@ GET /api/notifications
     }
   ]
 }
-```
 
----
-
-## Create Notification
-
-```http
 POST /api/notifications
-```
 
-### Request Body
+Request Body
 
-```json
 {
   "userId": "user_1",
   "title": "Placement Update",
   "message": "Microsoft hiring drive",
   "link": "/placements/microsoft"
 }
-```
 
-### Response
+Response
 
-```json
 {
   "success": true,
   "message": "Notification created"
 }
-```
 
----
-
-## Mark Notification as Read
-
-```http
 PATCH /api/notifications/:id/read
-```
 
-### Response
+Response
 
-```json
 {
   "success": true
 }
-```
 
----
-
-## Delete Notification
-
-```http
 DELETE /api/notifications/:id
-```
 
-### Response
+Response
 
-```json
 {
   "success": true
 }
-```
 
----
+Notification Schema
 
-# Notification Schema
-
-```json
 {
   "id": "string",
   "userId": "string",
@@ -114,37 +70,9 @@ DELETE /api/notifications/:id
   "createdAt": "timestamp",
   "link": "string"
 }
-```
 
----
+For real-time notification delivery, WebSockets can be used. When the user logs into the application, the frontend establishes a socket connection with the server. The server stores the active socket connection. Whenever a notification is created, the server first stores it in the database and then instantly pushes it to the connected client through the socket connection. This allows users to receive notifications without refreshing the page.
 
-# Real-Time Notification Design
+MySQL can be used as the primary database because notification data is structured and relational. Redis can later be added for caching frequently accessed notifications and reducing database load.
 
-I would use WebSockets for real-time notifications.
-
-Flow:
-1. User logs into the application.
-2. Frontend establishes socket connection.
-3. Server stores active socket connection.
-4. Whenever a notification is created:
-   - save notification in database
-   - instantly send notification through socket
-5. User receives notification without refreshing the page.
-
----
-
-# Database Choice
-
-I would use MySQL because notification data is structured and relational.
-
-Later Redis can be added for caching frequently accessed notifications and reducing database load.
-
----
-
-# Conclusion
-
-This design provides:
-- clean REST APIs
-- real-time notification delivery
-- scalable notification handling
-- proper notification management
+This design provides clean REST APIs, real-time notification delivery, scalable notification handling, and proper notification management.
