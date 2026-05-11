@@ -125,3 +125,19 @@ I would also avoid selecting unnecessary columns and only fetch fields required 
 
 Overall, indexing, pagination, partitioning together can significantly improve performance for large-scale notification systems.
 
+
+# Stage 4
+## Answer
+
+To scale the notification system, both vertical scaling and horizontal scaling can be used, but I would prefer horizontal scaling for a large-scale system.
+
+Vertical scaling means increasing server resources such as RAM, CPU.This works initially but has hardware limitations and becomes expensive after a point.Horizontal scaling is more suitable because multiple backend servers can be added as traffic increases.
+
+A load balancer can distribute requests evenly across servers so no single server becomes overloaded.
+
+For real-time notifications, multiple WebSocket servers can also run behind the load balancer.
+
+I would also use Redis caching for recent notifications, unread notifications and frequently accessed data
+This reduces repeated database queries and improves response time significantly.
+
+Overall, horizontal scaling combined with load balancing and Redis caching provides better scalability and reliability for a notification system with very high traffic.
