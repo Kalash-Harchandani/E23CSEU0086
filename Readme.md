@@ -44,6 +44,7 @@ The algorithm selects the most valuable set of maintenance tasks without exceedi
 
 ## Screenshots
 
+![text](screenshots/vehicles.png) ![text](screenshots/Schedule_with_knapsack.png) ![text](screenshots/Depots.png)
 
 ## How to Run
 

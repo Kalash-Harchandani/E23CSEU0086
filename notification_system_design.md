@@ -150,3 +150,14 @@ If a very large number of notifications need to be sent, I would use asynchronou
 Notifications would first enter the queue, and worker services would process them separately.
 
 I have not implemented these technologies yet personally, but I understand how they fit into scalable systems for handling traffic spikes, reducing server load and improving reliability.
+
+
+# Stage 6
+
+## Answer
+
+The approach first fetches notifications from the API and filters unread notifications.
+Notifications are then prioritized based on type such as Placement > Result > Event and sorted further using recency.
+Finally, the top priority notifications are returned to the user.
+
+![alt text](screenshots/priority_1.png) ![alt text](screenshots/priority_2.png)
