@@ -1,0 +1,33 @@
+{
+  "name": "e23cseu0086",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon vehicle_maintence_scheduler/src/server.js",
+    "start": "node vehicle_maintence_scheduler/src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kalash-Harchandani/E23CSEU0086.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kalash-Harchandani/E23CSEU0086/issues"
+  },
+  "homepage": "https://github.com/Kalash-Harchandani/E23CSEU0086#readme",
+  "description": "",
+  "dependencies": {
+    "axios": "^1.16.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
