@@ -5,6 +5,10 @@ import {
 
 import Log from "../../../logging_middleware/logger.js";
 
+import knapsack
+from "../algorithms/knapsack.js";
+
+
 export const getDepots = async (
     req,
     res
@@ -126,13 +130,22 @@ export const generateSchedule = async (
 
         }
 
+        const mechanicHours =
+            depot.MechanicHours;
+
+        const result =
+            knapsack(
+                vehicles,
+                mechanicHours
+            );
+
         try {
 
             await Log(
                 "backend",
                 "info",
                 "controller",
-                `Schedule fetched for depot ${depotId}`
+                `Optimized schedule generated for depot ${depotId}`
             );
 
         } catch {}
@@ -144,13 +157,19 @@ export const generateSchedule = async (
             depotId:
                 Number(depotId),
 
-            mechanicHours:
-                depot.MechanicHours,
+            mechanicHours,
 
             totalVehicles:
                 vehicles.length,
 
-            vehicles
+            optimizedTaskCount:
+                result.selectedTasks.length,
+
+            maxImpact:
+                result.maxImpact,
+
+            scheduledTasks:
+                result.selectedTasks
 
         });
 
@@ -162,9 +181,12 @@ export const generateSchedule = async (
         );
 
         res.status(500).json({
+
             success: false,
+
             message:
                 "Schedule generation failed"
+
         });
 
     }
